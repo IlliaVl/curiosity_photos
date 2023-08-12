@@ -1,6 +1,16 @@
+import 'package:curiosity_photos/data/network/nasa_client.dart';
+import 'package:curiosity_photos/data/providers/nasa_photos_provider.dart';
 import 'package:flutter/material.dart';
 
+import 'env.dart';
+
 void main() {
+  final netClient = NasaClient();
+  NASAPhotosProvider(
+    netClient,
+  ).getPhotos(Env.nasaApiKey).then(
+        (value) => print(value),
+      );
   runApp(const MyApp());
 }
 
