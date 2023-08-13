@@ -1,4 +1,4 @@
-import '../../presentation/abstracts/repositories/auth_repository_interface.dart';
+import '../../domain/abstracts/repositories/auth_repository_interface.dart';
 import '../providers/firebase_auth_provider.dart';
 
 /// The Firebase repository for authentication.

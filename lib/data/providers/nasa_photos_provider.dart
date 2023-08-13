@@ -1,21 +1,25 @@
-import 'package:dio/dio.dart';
-
+import '../../domain/exceptions/curiosity_exception.dart';
 import '../abstracts/network/net_client.dart';
+import '../dtos/mars_photo_dto.dart';
 
-/// Photos data provider
-class NASAPhotosProvider {
+/// Photos data provider.
+class NasaPhotosProvider {
   static const _photosEndpoint = '/rovers/curiosity/photos';
 
-  /// The NetClient to use for the network requests
+  /// The NetClient to use for the network requests.
   final NetClient netClient;
 
-  /// Creates new [NASAPhotosProvider]
-  NASAPhotosProvider(this.netClient);
+  /// Key for API calls.
+  final String apiKey;
+
+  /// Creates new [NasaPhotosProvider]
+  NasaPhotosProvider({
+    required this.netClient,
+    required this.apiKey,
+  });
 
   /// Returns list of photos.
-  Future<Response<dynamic>> getPhotos(
-    String apiKey,
-  ) async {
+  Future<List<MarsPhotoDTO>> getPhotos() async {
     final response = await netClient(
       _photosEndpoint,
       queryParameters: {
@@ -23,13 +27,23 @@ class NASAPhotosProvider {
         'api_key': apiKey,
       },
     );
-    if (response.data is Map<String, dynamic>) {
-      final photos = response.data['photos'];
-      if (photos is List) {
-        print('Photos is List');
-      }
-      return response;
+    if (response.statusCode != 200) {
+      throw const CuriosityException(
+        CuriosityExceptionType.api,
+      );
     }
-    throw 'Photos were not received';
+    try {
+      if (response.data is Map<String, dynamic>) {
+        final marsPhotosDto = MarsPhotoDTO.fromJsonList(
+          List<Map<String, dynamic>>.from(response.data['photos']),
+        );
+        return marsPhotosDto;
+      }
+    } on Exception catch (_) {
+      throw const CuriosityException(
+        CuriosityExceptionType.parsing,
+      );
+    }
+    return [];
   }
 }

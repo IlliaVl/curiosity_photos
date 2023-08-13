@@ -1,10 +1,17 @@
-import 'package:curiosity_photos/domain/cubits/auth_cubit.dart';
-import 'package:curiosity_photos/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/network/nasa_client.dart';
+import '../../data/providers/nasa_photos_provider.dart';
+import '../../data/repositories/nasa_repository.dart';
+import '../../domain/cubits/auth/auth_cubit.dart';
+import '../../domain/cubits/photos/mars_photos_cubit.dart';
+import '../../env.dart';
+import '../mixins/errors_snack_bar_mixin.dart';
+import 'main_screen.dart';
+
 /// Screen is responsible for login.
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget with ErrorsSnackBarMixin {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,24 +21,23 @@ class LoginScreen extends StatelessWidget {
         if (state is AuthLoggedIn) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const MyHomePage(
-                title: 'Flutter Demo Home Page',
+              builder: (context) => BlocProvider<MarsPhotosCubit>(
+                create: (context) => MarsPhotosCubit(
+                  repository: NasaRepository(
+                    provider: NasaPhotosProvider(
+                      netClient: NasaClient(),
+                      apiKey: Env.nasaApiKey,
+                    ),
+                  ),
+                )..load(),
+                child: const MainScreen(),
               ),
             ),
           );
         } else if (state is AuthErrorGeneric) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Something went wrong. Try later, please.'),
-            ),
-          );
+          showGenericErrorSnackBar(context);
         } else if (state is AuthErrorNetwork) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Sorry, there was a network error. '
-                  'Please check your internet connection and try again.'),
-            ),
-          );
+          showNetworkErrorSnackBar(context);
         }
       },
       child: Scaffold(
@@ -79,9 +85,6 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
         ),
-        // body: Center(
-        //   child: CircularProgressIndicator(),
-        // ),
       ),
     );
   }

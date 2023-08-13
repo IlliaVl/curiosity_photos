@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:curiosity_photos/domain/exceptions/curiosity_exception.dart';
 import 'package:meta/meta.dart';
 
-import '../../presentation/abstracts/repositories/auth_repository_interface.dart';
+import '../../abstracts/repositories/auth_repository_interface.dart';
+import '../../exceptions/curiosity_exception.dart';
 
 part 'auth_state.dart';
 
