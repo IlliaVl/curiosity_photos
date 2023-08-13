@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../abstracts/repositories/auth_repository_interface.dart';
@@ -28,6 +29,8 @@ class AuthCubit extends Cubit<AuthState> {
         default:
           emit(AuthErrorGeneric());
       }
+    } on Exception catch (_) {
+      emit(AuthErrorGeneric());
     }
   }
 }

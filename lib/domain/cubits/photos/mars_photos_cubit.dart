@@ -50,7 +50,7 @@ class MarsPhotosCubit extends Cubit<MarsPhotosState> {
             ),
           );
       }
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       emit(
         state.copyWith(
           busy: false,
