@@ -5,7 +5,9 @@ import '../../domain/cubits/photos/mars_photos_cubit.dart';
 import '../../domain/cubits/photos/mars_photos_state.dart';
 import '../mixins/errors_snack_bar_mixin.dart';
 import '../widgets/constrained_network_image.dart';
+import 'photo_details_screen.dart';
 
+/// Screen responsible for displaying list of Mars photos.
 class MainScreen extends StatelessWidget with ErrorsSnackBarMixin {
   const MainScreen({super.key});
 
@@ -42,10 +44,25 @@ class MainScreen extends StatelessWidget with ErrorsSnackBarMixin {
                     )
                   : ListView.builder(
                       itemCount: state.marsPhotos.length,
-                      itemBuilder: (context, index) => ConstrainedNetworkImage(
-                        imageWidth: imageSize,
-                        imageHeight: imageSize,
-                        imageUrl: state.marsPhotos[index].photoUrl,
+                      itemBuilder: (_, index) => InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  BlocProvider<MarsPhotosCubit>.value(
+                                value: context.read<MarsPhotosCubit>(),
+                                child: PhotoDetailsScreen(
+                                  photoIndex: index,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: ConstrainedNetworkImage(
+                          imageWidth: imageSize,
+                          imageHeight: imageSize,
+                          imageUrl: state.marsPhotos[index].photoUrl,
+                        ),
                       ),
                     );
         },
