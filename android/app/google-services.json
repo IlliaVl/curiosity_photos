@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "369268429269",
+    "project_id": "curiosity-photos",
+    "storage_bucket": "curiosity-photos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369268429269:android:e3b8ffe30a9d2b37e22d5c",
+        "android_client_info": {
+          "package_name": "com.example.curiosity_photos.curiosity_photos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369268429269-nm9m3l5vvbi0a2sghhk6hrmfg5jfsuck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBolTouwCAuY2EkoBuh-uHGcZa6uDZ1yQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369268429269-nm9m3l5vvbi0a2sghhk6hrmfg5jfsuck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
