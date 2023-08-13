@@ -1,16 +1,15 @@
-# curiosity_photos
+# Curiosity Photos
 
-A new Flutter project.
+Flutter app that fetches data from an open API and Firebase and displays it on the screen.
+The API endpoint to fetch the data is `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY`.
 
-## Getting Started
+## How to launch
 
-This project is a starting point for a Flutter application.
+Steps to launch app are following:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Create or add to the root directory of project .env file with the data, where DEMO_KEY is the key received in `https://api.nasa.gov`.
+Replace it with the real value: 
+   NASA_API_KEY=DEMO_KEY
+2. Run `dart run build_runner build --delete-conflicting-outputs` from the root directory of the project.
+It will create `env.g.dart` file.
+3. Launch app as usual Flutter project.
